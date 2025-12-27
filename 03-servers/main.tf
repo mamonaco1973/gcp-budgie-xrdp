@@ -46,25 +46,25 @@ data "google_compute_subnetwork" "ad_subnet" {
 }
 
 # ==============================================================================
-# INPUT VARIABLE: MATE Image Name
+# INPUT VARIABLE: BUDGIE Image Name
 # ------------------------------------------------------------------------------
-# Name of the custom MATE image produced by Packer. This image is used as the
+# Name of the custom BUDGIE image produced by Packer. This image is used as the
 # boot source for GCE instances created in this module.
 # ==============================================================================
 
-variable "mate_image_name" {
-  description = "Name of the Packer-built MATE GCP image"
+variable "budgie_image_name" {
+  description = "Name of the Packer-built BUDGIE GCP image"
   type        = string
 }
 
 # ==============================================================================
 # DATA SOURCE: GCE IMAGE LOOKUP
 # ------------------------------------------------------------------------------
-# Resolves the custom MATE image by name within the current GCP project.
+# Resolves the custom BUDGIE image by name within the current GCP project.
 # This allows downstream resources to reference the image self_link/id safely.
 # ==============================================================================
 
-data "google_compute_image" "mate_packer_image" {
-  name    = var.mate_image_name        # Image name passed in from destroy/build workflows
+data "google_compute_image" "budgie_packer_image" {
+  name    = var.budgie_image_name        # Image name passed in from destroy/build workflows
   project = local.credentials.project_id  # GCP project containing the custom image
 }

@@ -39,7 +39,7 @@ The result is a **disposable, reproducible, cloud-hosted Linux workstation** tha
 can be used for **any build, automation, or cloud project**
 featured on the channel.
 
-![GCP diagram](gcp-Budgie.png)
+![GCP diagram](gcp-budgie.png)
 
 
 ## Prerequisites

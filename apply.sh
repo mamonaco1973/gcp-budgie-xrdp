@@ -61,11 +61,11 @@ export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/credentials.json"
 
 # Run Packer to build the BUDGIE image in GCP.
 cd 02-packer
-packer init .
+# packer init .
 
-packer build \
-  -var="project_id=$project_id" \
-  budgie_image.pkr.hcl
+# packer build \
+#   -var="project_id=$project_id" \
+#   budgie_image.pkr.hcl
 
 # Return to repo root.
 cd ..
@@ -87,7 +87,7 @@ if [[ -z "$budgie_image" ]]; then
   exit 1  # Hard fail if no image found — we can't safely destroy without this input
 fi
 
-echo "NOTE: BUDGIE image is $budgie_image"
+echo "NOTE: Budgie image is $budgie_image"
 
 # Build VMs that connect to / join the directory.
 cd 03-servers
