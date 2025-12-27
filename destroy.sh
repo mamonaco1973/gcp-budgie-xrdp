@@ -31,7 +31,7 @@ if [[ -z "$budgie_image" ]]; then
   exit 1  # Hard fail if no image found — we can't safely destroy without this input
 fi
 
-echo "NOTE: BUDGIE image is $budgie_image"
+echo "NOTE: Budgie image is $budgie_image"
 
 # ------------------------------------------------------------------------------
 # Phase 1: Destroy Servers (Terraform)
