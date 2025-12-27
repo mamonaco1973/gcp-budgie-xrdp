@@ -61,11 +61,11 @@ export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/credentials.json"
 
 # Run Packer to build the BUDGIE image in GCP.
 cd 02-packer
-# packer init .
+packer init .
 
-# packer build \
-#   -var="project_id=$project_id" \
-#   budgie_image.pkr.hcl
+packer build \
+  -var="project_id=$project_id" \
+  budgie_image.pkr.hcl
 
 # Return to repo root.
 cd ..
