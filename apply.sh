@@ -3,9 +3,9 @@
 # apply.sh
 # ------------------------------------------------------------------------------
 # Purpose:
-#   - End-to-end build for the GCP MATE environment:
+#   - End-to-end build for the GCP BUDGIE environment:
 #       01) Terraform: provision directory services (Mini-AD)
-#       02) Packer:    build the GCP MATE image
+#       02) Packer:    build the GCP BUDGIE image
 #       03) Terraform: provision servers joined to the directory
 #       04) Validate:  run post-build checks
 #
@@ -48,7 +48,7 @@ fi
 cd ..
 
 # ------------------------------------------------------------------------------
-# Phase 2: Build GCP MATE Image (Packer)
+# Phase 2: Build GCP BUDGIE Image (Packer)
 # ------------------------------------------------------------------------------
 
 # Extract the GCP project_id from the service account key.
@@ -59,13 +59,13 @@ project_id=$(jq -r '.project_id' "./credentials.json")
 gcloud auth activate-service-account --key-file="./credentials.json" > /dev/null 2> /dev/null
 export GOOGLE_APPLICATION_CREDENTIALS="$(pwd)/credentials.json"
 
-# Run Packer to build the MATE image in GCP.
+# Run Packer to build the BUDGIE image in GCP.
 cd 02-packer
 packer init .
 
 packer build \
   -var="project_id=$project_id" \
-  mate_image.pkr.hcl
+  budgie_image.pkr.hcl
 
 # Return to repo root.
 cd ..
@@ -74,20 +74,20 @@ cd ..
 # Phase 3: Server Deployment (Terraform)
 # ------------------------------------------------------------------------------
 
-# Determine Latest MATE Image
+# Determine Latest BUDGIE Image
 
-mate_image=$(gcloud compute images list \
-  --filter="name~'^mate-image' AND family=mate-images" \
+budgie_image=$(gcloud compute images list \
+  --filter="name~'^budgie-image' AND family=budgie-images" \
   --sort-by="~creationTimestamp" \
   --limit=1 \
-  --format="value(name)")  # Grabs most recently created image from 'mate-images' family
+  --format="value(name)")  # Grabs most recently created image from 'budgie-images' family
 
-if [[ -z "$mate_image" ]]; then
-  echo "ERROR: No latest image found for 'mate-image' in family 'mate-images'."
+if [[ -z "$budgie_image" ]]; then
+  echo "ERROR: No latest image found for 'budgie-image' in family 'budgie-images'."
   exit 1  # Hard fail if no image found — we can't safely destroy without this input
 fi
 
-echo "NOTE: MATE image is $mate_image"
+echo "NOTE: BUDGIE image is $budgie_image"
 
 # Build VMs that connect to / join the directory.
 cd 03-servers
@@ -97,7 +97,7 @@ terraform init
 
 # Apply the configuration (no prompt).
 terraform apply \
-  -var="mate_image_name=$mate_image" \
+  -var="budgie_image_name=$budgie_image" \
   -auto-approve
 
 # Return to repo root.

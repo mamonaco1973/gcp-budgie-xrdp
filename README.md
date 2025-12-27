@@ -1,7 +1,7 @@
-# Google Cloud MATE XRDP Cloud Development Environment
+# Google Cloud Budgie XRDP Cloud Development Environment
 
 This project provides a **complete cloud-based Linux desktop development environment**
-powered by **MATE + XRDP**, **Mini-Active Directory**, and **Google Filestore (NFS)**
+powered by **Budgie + XRDP**, **Mini-Active Directory**, and **Google Filestore (NFS)**
 on the **Google Cloud Platform (GCP)**.
 
 It is designed as a **universal dev workstation** that contains the full superset of
@@ -12,11 +12,11 @@ tools, dependencies, and configurations used across all build projects on my cha
 Instead of manually configuring a workstation for each tutorial, demo, or cloud
 project, this solution automatically provisions:
 
-1. **A Custom MATE XRDP GCP Image (Packer)**
+1. **A Custom Budgie XRDP GCP Image (Packer)**
    - Preloaded with Chrome, Firefox (deb), VS Code, Docker, KRDC, Postman
    - Includes all development tooling used across channel projects:
      **Packer, Terraform, Docker CLI, Azure CLI, AWS CLI v2, Google Cloud CLI**
-   - Snap-free, clean, lightweight MATE desktop
+   - Snap-free, clean, lightweight Budgie desktop
    - XRDP fully configured with all fixes, enhancements, and defaults
    - Desktop/panel icons, terminal emulator defaults, and `/etc/skel` customizations
 
@@ -25,8 +25,8 @@ project, this solution automatically provisions:
    - Domain users generated from a template with friendly passwords
    - Central authentication for Linux and Windows clients
 
-3. **Domain-Joined MATE XRDP VM (Terraform)**
-   - Deploys the MATE XRDP instance using the Packer-built GCP custom image
+3. **Domain-Joined Budgie XRDP VM (Terraform)**
+   - Deploys the Budgie XRDP instance using the Packer-built GCP custom image
    - Automatically joins the Mini-AD domain during boot
    - Ensures consistent user profiles and default settings through `/etc/skel`
 
@@ -39,7 +39,7 @@ The result is a **disposable, reproducible, cloud-hosted Linux workstation** tha
 can be used for **any build, automation, or cloud project**
 featured on the channel.
 
-![GCP diagram](gcp-mate.png)
+![GCP diagram](gcp-Budgie.png)
 
 
 ## Prerequisites
@@ -56,8 +56,8 @@ If this is your first time watching our content, we recommend starting with this
 Clone the repository from GitHub and move into the project directory:  
 
 ```bash
-git clone https://github.com/mamonaco1973/gcp-mate-xrdp.git
-cd gcp-mate-xrdp
+git clone https://github.com/mamonaco1973/gcp-budgie-xrdp.git
+cd gcp-budgie-xrdp
 ```  
 
 ---
@@ -67,7 +67,7 @@ cd gcp-mate-xrdp
 Run [check_env](check_env.sh) to validate your environment, then run [apply](apply.sh) to provision the infrastructure.  
 
 ```bash
-develop-vm:~/gcp-mate-xrdp$ ./apply.sh
+develop-vm:~/gcp-Budgie-xrdp$ ./apply.sh
 NOTE: Validating that required commands are in PATH.
 NOTE: gcloud is found in the current PATH.
 NOTE: terraform is found in the current PATH.
@@ -84,7 +84,7 @@ When the deployment completes, the following resources are created:
 
 - **Networking**
   - A **custom-mode VPC** with dedicated subnets for the Mini-AD domain controller,
-    Filestore, and MATE XRDP client VMs
+    Filestore, and Budgie XRDP client VMs
   - **Firewall rules** allowing required AD/DC traffic (DNS 53, Kerberos 88,
     NTP 123, LDAP/SMB/RPC, dynamic RPC range) and **NFS (2049)** access to Filestore
     from trusted subnets
@@ -108,11 +108,11 @@ When the deployment completes, the following resources are created:
 - **Shared Storage (Google Filestore)**
   - A **Filestore instance** exporting an NFS share for user home directories
   - NFS endpoint reachable from domain-joined Linux clients
-  - Mounted on MATE XRDP instances (e.g., `/home`) with consistent POSIX
+  - Mounted on Budgie XRDP instances (e.g., `/home`) with consistent POSIX
     ownership and permissions
 
-- **MATE XRDP Client**
-  - A **custom-image MATE VM** built with Packer and deployed via Terraform
+- **Budgie XRDP Client**
+  - A **custom-image Budgie VM** built with Packer and deployed via Terraform
   - **Automatically joined to the Mini-AD domain** at first boot
   - XRDP fully configured for domain authentication and multi-user access
   - User home directories backed by **Filestore NFS**, ensuring persistence
@@ -124,7 +124,7 @@ and multi-user XRDP access.
 
 ## Users and Groups
 
-As part of this project a set of **users** and **groups** are automatically created through a scripted process. These resources are intended for **testing and demonstration purposes**, showcasing how to automate user and group provisioning in a mini Active Directory environment.
+As part of this project a set of **users** and **groups** are automatically created through a scripted process. These resources are intended for **testing and demonstration purposes**, showcasing how to autoBudgie user and group provisioning in a mini Active Directory environment.
 
 ### Groups Created
 
@@ -181,7 +181,7 @@ Follow these steps to provision a new user in the Active Directory domain and va
    - Open **PowerShell** on the AD server.  
    - Run the script located at:  
      ```powershell
-     Z:\azure-mate-xrdp\04-utils\getNextUID.bat
+     Z:\azure-Budgie-xrdp\04-utils\getNextUID.bat
      ```  
    - This script returns the next available **`uidNumber`** to assign to the new account.  
 
@@ -199,7 +199,7 @@ Follow these steps to provision a new user in the Active Directory domain and va
      - **us** (or other geographic/departmental group as applicable).  
 
 8. **Validate User on Linux**  
-   - Open an **AWS Systems Manager (SSM)** session to the **`mate-instance`** instance.  
+   - Open an **AWS Systems Manager (SSM)** session to the **`Budgie-instance`** instance.  
    - Run the following command to confirm the user’s identity mapping:  
      ```bash
      id mcloud
